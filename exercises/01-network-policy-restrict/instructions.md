@@ -20,7 +20,22 @@ You are tasked to lock down communication between Pods with the help of network 
 
 1. Create the objects from the file [`setup.yaml`](./setup.yaml).
 2. Inspect the Pods and wait until they transition into the "Running" status.
+
+```sh
+kubens g04
+k get po -o wide
+k exec -it frontend -- sh
+wget --spider --timeout=1 10.244.0.248:3000     # есть доступ
+k exec -it other -n default -- sh
+wget --spider --timeout=1 10.244.0.248:3000     # есть доступ
+```
+
+
 3. Create a network policy that blocks _all_ inter-Pod ingress communication for the namespace `g04`.
+
+```yaml
+```
+
 4. Verify that the Pod `frontend` in the `g04` namespace cannot talk to the Pod `backend` using the `wget` tool.
 5. Verify that Pods outside of the `g04` namespace cannot talk to Pods outside of the namespace using the `wget` tool.
 6. Create a network policy that allows ingress communication from the `frontend` Pod to the `backend` Pod on the port 3000. All other ingress traffic should still be disallowed.

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: accounting-ingress
+  namespace: t75
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - k8s.ishandy.com
+    secretName: accounting-secret
+  rules:
+  - host: k8s.ishandy.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/accounting"
+        backend:
+          service:
+            name: accounting-service
+            port:
+              number: 801
