@@ -69,18 +69,13 @@ spec:
     command: ["sh", "-c", "while true; do ping -c 1 google.com; sleep 5; done"]
 ```
 
-Create the Pod from the manifest. After a couple of seconds, the Pod should transition into the "Running" status.
-
-```
-$ kubectl get pod network-call
+```sh
+$ k apply -f pod.yaml
+$ k get pod network-call
 NAME           READY   STATUS    RESTARTS   AGE
 network-call   1/1     Running   0          27s
-```
-
-AppArmor prevents the Pod from making a network call. You can check the logs to verify.
-
-```
-$ kubectl logs network-call
+# AppArmor prevents the Pod from making a network call. You can check the logs to verify.
+$ k logs network-call
 ...
 sh: ping: Permission denied
 sh: sleep: Permission denied
